@@ -1,8 +1,16 @@
 import React, { useEffect, useContext } from "react";
 import { FormContext } from "../App";
 
-const TablePage = () => {
-	const [formData, setFormData] = useContext(FormContext);
+interface FormData {
+	name: string;
+	email: string;
+}
+
+const TablePage: React.FC = () => {
+	const [formData] = useContext(FormContext) as [
+		FormData,
+		React.Dispatch<React.SetStateAction<FormData>>
+	];
 
 	useEffect(() => {
 		console.log("Form data updated", formData);
@@ -62,4 +70,5 @@ const TablePage = () => {
 		</div>
 	);
 };
+
 export default TablePage;
