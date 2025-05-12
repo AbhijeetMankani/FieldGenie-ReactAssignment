@@ -1,12 +1,15 @@
 import React, { useEffect, useContext } from "react";
 import { FormContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const FormPage = () => {
 	const [formData, setFormData] = useContext(FormContext);
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		console.log("Form submitted", formData);
+		navigate("/table");
 	};
 
 	return (
