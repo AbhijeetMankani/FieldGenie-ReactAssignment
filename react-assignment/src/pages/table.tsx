@@ -1,20 +1,16 @@
 import React, { useEffect, useContext } from "react";
 import { FormContext } from "../App";
+import { FormDataType, FormContextType } from "../interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 
-interface FormData {
-	name: string;
-	email: string;
-}
 
 const TablePage: React.FC = () => {
-	const [formData] = useContext(FormContext) as [
-		FormData,
-		React.Dispatch<React.SetStateAction<FormData>>
-	];
+	const { allFormData } = useContext(FormContext) as FormContextType;
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log("Form data updated", formData);
-	}, [formData]);
+		console.log("Form data updated", allFormData);
+	}, [allFormData]);
 
 	return (
 		<div>
@@ -41,31 +37,31 @@ const TablePage: React.FC = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td
-							style={{
-								border: "1px solid black",
-								padding: "8px",
-							}}
-						>
-							{formData.name}
-						</td>
-						<td
-							style={{
-								border: "1px solid black",
-								padding: "8px",
-							}}
-						>
-							{formData.email}
-						</td>
-					</tr>
+					{allFormData.map((formData: FormDataType, index: number) => (
+						<tr key={index}>
+							<td
+								style={{
+									border: "1px solid black",
+									padding: "8px",
+								}}
+							>
+								{formData.name}
+							</td>
+							<td
+								style={{
+									border: "1px solid black",
+									padding: "8px",
+								}}
+							>
+								{formData.email}
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 
-			<button>
-				<a href="/form" style={{ textDecoration: "none" }}>
-					Go Back to Form
-				</a>
+			<button onClick={() => navigate("/form")}>
+				Go Back to Form
 			</button>
 		</div>
 	);
