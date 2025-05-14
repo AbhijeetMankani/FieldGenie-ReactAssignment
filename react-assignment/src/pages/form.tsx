@@ -5,7 +5,11 @@ import { FormDataType } from "../interfaces/interfaces";
 
 const FormPage: React.FC = () => {
 	let allFormData: FormDataType[] = [];
-	const [formData, setFormData] = React.useState<FormDataType>({
+
+	const currentForm = localStorage.getItem("currentForm");
+
+
+	const [formData, setFormData] = React.useState<FormDataType>(currentForm ? JSON.parse(currentForm) : {
 		name: "",
 		email: "",
 	});
@@ -14,10 +18,16 @@ const FormPage: React.FC = () => {
 		allFormData = JSON.parse(
 			localStorage.getItem("formData") || "[]"
 		) as FormDataType[];
+
+		const currentForm = localStorage.getItem("currentForm");
+		if (currentForm) {
+			const currentFormData = JSON.parse(currentForm);
+			setFormData(currentFormData);
+		}
 	}, [])
 
 	useEffect(() => {
-		localStorage.setItem("formData", JSON.stringify(allFormData));
+		localStorage.setItem("currentForm", JSON.stringify(formData))
 	}, [formData]);
 
 	const navigate = useNavigate();
@@ -28,6 +38,7 @@ const FormPage: React.FC = () => {
 		console.log("Form submitted", formData);
 		allFormData.push(formData);
 		localStorage.setItem("formData", JSON.stringify(allFormData));
+		localStorage.removeItem("currentForm");
 
 		navigate("/table");
 	};
