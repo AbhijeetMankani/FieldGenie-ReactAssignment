@@ -1,16 +1,17 @@
-import React, { useEffect, useContext } from "react";
-import { FormContext } from "../App";
-import { FormDataType, FormContextType } from "../interfaces/interfaces";
+import React, { useEffect, useState } from "react";
+import { FormDataType } from "../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 
-
 const TablePage: React.FC = () => {
-	const { allFormData } = useContext(FormContext) as FormContextType;
 	const navigate = useNavigate();
+	const [allFormData, setAllFormData] = useState<FormDataType[]>([]);
 
 	useEffect(() => {
-		console.log("Form data updated", allFormData);
-	}, [allFormData]);
+		const storedData = localStorage.getItem("formData");
+		if (storedData) {
+			setAllFormData(JSON.parse(storedData));
+		}
+	}, []);
 
 	return (
 		<div>

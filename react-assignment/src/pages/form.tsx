@@ -1,15 +1,20 @@
-import React, { useEffect, useContext, FormEvent } from "react";
-import { FormContext } from "../App";
+import React, { useEffect, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { FormContextType, FormDataType } from "../interfaces/interfaces";
+import { FormDataType } from "../interfaces/interfaces";
 
 
 const FormPage: React.FC = () => {
-	const { allFormData, setAllFormData } = useContext(FormContext) as FormContextType;
+	let allFormData: FormDataType[] = [];
 	const [formData, setFormData] = React.useState<FormDataType>({
 		name: "",
 		email: "",
 	});
+
+	useEffect(() => {
+		allFormData = JSON.parse(
+			localStorage.getItem("formData") || "[]"
+		) as FormDataType[];
+	}, [])
 
 	useEffect(() => {
 		localStorage.setItem("formData", JSON.stringify(allFormData));
@@ -22,7 +27,6 @@ const FormPage: React.FC = () => {
 
 		console.log("Form submitted", formData);
 		allFormData.push(formData);
-		setAllFormData(allFormData);
 		localStorage.setItem("formData", JSON.stringify(allFormData));
 
 		navigate("/table");
