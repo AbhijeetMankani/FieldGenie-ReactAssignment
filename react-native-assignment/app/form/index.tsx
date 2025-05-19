@@ -1,7 +1,7 @@
 import { FormDataType } from '@/interfaces/interfaces';
 import React, { useContext, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { FormContext } from '../index';
+import FormContext from '../context/formContext';
 
 const styles = StyleSheet.create({
     input: {

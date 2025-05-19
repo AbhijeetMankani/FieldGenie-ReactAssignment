@@ -2,7 +2,7 @@ import { NavigationProp } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import { FormContext } from '../index';
+import FormContext from '../context/formContext';
 
 const { Row, Cell, Header, Title } = DataTable;
 
